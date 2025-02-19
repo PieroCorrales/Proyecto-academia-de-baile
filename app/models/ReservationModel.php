@@ -1,7 +1,6 @@
 <?php
 // Archivo: app/models/ReservationModel.php
 
-// Incluir la configuración de la base de datos
 require_once 'C:/xampp/htdocs/proyecto-clases-baile/config/config.php';
 
 class ReservationModel {
@@ -22,5 +21,23 @@ class ReservationModel {
     public function obtenerTodasLasReservas() {
         $sentencia = $GLOBALS['conexion']->query("SELECT * FROM reservas");
         return $sentencia->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Actualizar el estado de una reserva
+    public function actualizarEstado($id, $estado) {
+        $sentencia = $GLOBALS['conexion']->prepare("UPDATE reservas SET estado = ? WHERE id = ?");
+        return $sentencia->execute([$estado, $id]);
+    }
+
+    public function verificarCapacidad($clase_id) {
+        $sentencia = $GLOBALS['conexion']->prepare("SELECT COUNT(*) AS reservas FROM reservas WHERE clase_id = ?");
+        $sentencia->execute([$clase_id]);
+        $reservasActuales = $sentencia->fetch(PDO::FETCH_ASSOC)['reservas'];
+    
+        $sentencia = $GLOBALS['conexion']->prepare("SELECT capacidad FROM clases WHERE id = ?");
+        $sentencia->execute([$clase_id]);
+        $capacidadMaxima = $sentencia->fetch(PDO::FETCH_ASSOC)['capacidad'];
+    
+        return $reservasActuales < $capacidadMaxima;
     }
 }

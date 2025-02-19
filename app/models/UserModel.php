@@ -1,7 +1,6 @@
 <?php
 // Archivo: app/models/UserModel.php
 
-// Incluir la configuración de la base de datos
 require_once '../../config/config.php';
 
 class UserModel {
@@ -16,6 +15,13 @@ class UserModel {
     public function buscarPorEmail($email) {
         $sentencia = $GLOBALS['conexion']->prepare("SELECT * FROM usuarios WHERE email = ?");
         $sentencia->execute([$email]);
+        return $sentencia->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Buscar un usuario por ID
+    public function buscarPorId($id) {
+        $sentencia = $GLOBALS['conexion']->prepare("SELECT nombre, apellidos FROM usuarios WHERE id = ?");
+        $sentencia->execute([$id]);
         return $sentencia->fetch(PDO::FETCH_ASSOC);
     }
 }
