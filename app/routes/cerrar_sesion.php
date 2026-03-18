@@ -1,12 +1,6 @@
 <?php
-// cerrar_sesion.php
-
-// Iniciar o recuperar la sesión actual
+require_once __DIR__ . '/../../config/config.php';
 session_start();
-
-// Destruir todas las variables de sesión
 session_destroy();
-
-// Redirigir al usuario a la página de inicio de sesión
-header('Location: /proyecto-clases-baile/app/views/auth/login.php');
+header('Location: ' . BASE_URL . '/app/views/auth/login.php');
 exit;

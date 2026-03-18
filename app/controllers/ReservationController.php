@@ -1,7 +1,6 @@
 <?php
-// Archivo: app/controllers/ReservationController.php
 
-require_once 'C:/xampp/htdocs/proyecto-clases-baile/app/models/ReservationModel.php';
+require_once __DIR__ . '/../models/ReservationModel.php';
 
 class ReservationController
 {
@@ -12,13 +11,24 @@ class ReservationController
         $this->modeloReserva = new ReservationModel();
     }
 
-    // Crear una nueva reserva
+    //todo crea una nueva reserva
     public function crearReserva($datos)
     {
         if (empty($datos['clase']) || empty($datos['fecha'])) {
             return "Debes proporcionar una clase y una fecha.";
         }
 
+        //todo verifica si la fecha es válida
+        if (!$this->esFechaValida($datos['fecha'])) {
+            return "La fecha seleccionada no es válida.";
+        }
+
+        //todo verifica si hay espacio disponible en la clase
+        if (!$this->modeloReserva->tieneEspacioDisponible($datos['clase'], $datos['fecha'])) {
+            return "Lo sentimos, esta clase ya ha alcanzado su capacidad máxima.";
+        }
+
+        //todo registra la reserva
         if ($this->modeloReserva->reservar($datos)) {
             return "Reserva exitosa.";
         } else {
@@ -26,58 +36,59 @@ class ReservationController
         }
     }
 
-    // Obtener las reservas de un usuario
+    //todo obtener reservas por id
     public function obtenerReservasPorUsuario($usuario_id)
     {
         return $this->modeloReserva->obtenerReservasPorUsuario($usuario_id);
     }
 
-    // Obtener todas las reservas (para el administrador)
+    //todo ADMIN Obtener todas las reservas
     public function obtenerTodasLasReservas()
     {
         return $this->modeloReserva->obtenerTodasLasReservas();
     }
 
-    // Actualizar el estado de una reserva
+    //todo Actualiza el estado de una reserva
     public function actualizarEstado($id, $estado)
     {
         return $this->modeloReserva->actualizarEstado($id, $estado);
     }
 
-    // Validar si una fecha es válida para reservas
+    //todo Validar si una fecha es válida para reservas (día laborable, hoy o futuro, máx 3 meses)
     public function esFechaValida($fecha)
     {
-        // Convertir la fecha a un objeto DateTime
         $date = new DateTime($fecha);
+        $hoy = new DateTime('today');
+        $limiteMax = new DateTime('+3 months');
 
-        // Definir el rango válido (mes de marzo)
-        $inicioMarzo = new DateTime('2023-03-01');
-        $finMarzo = new DateTime('2023-03-31');
-
-        // Verificar si la fecha está dentro del rango de marzo
-        if ($date < $inicioMarzo || $date > $finMarzo) {
+        if ($date < $hoy || $date > $limiteMax) {
             return false;
         }
 
-        // Verificar si el día es laborable (lunes a viernes)
-        $diaSemana = (int)$date->format('N'); // 1 = lunes, ..., 7 = domingo
-        if ($diaSemana > 5) { // Sábado (6) o Domingo (7)
+        $diaSemana = (int)$date->format('N');
+        if ($diaSemana > 5) {
             return false;
         }
 
         return true;
     }
+    //todo Obtener clases por dia
+    public function obtenerClasesPorDia($dia)
+    {
+        $sentencia = $GLOBALS['conexion']->prepare("
+            SELECT c.nombre AS clase_nombre, h.hora_inicio, h.hora_fin
+            FROM horarios_clases h
+            JOIN clases c ON h.clase_id = c.id
+            WHERE h.dia = ?
+            ORDER BY h.hora_inicio
+        ");
+        $sentencia->execute([$dia]);
+        return $sentencia->fetchAll(PDO::FETCH_ASSOC);
+    }
+    //todo Verificar si hay espacio en la clase
+    public function tieneEspacioDisponible($clase, $fecha)
+    {
+        return $this->modeloReserva->tieneEspacioDisponible($clase, $fecha);
+    }
 
-    // Obtener clases disponibles para un día específico
-public function obtenerClasesPorDia($dia) {
-    $sentencia = $GLOBALS['conexion']->prepare("
-        SELECT c.nombre AS clase_nombre, h.hora_inicio, h.hora_fin
-        FROM horarios_clases h
-        JOIN clases c ON h.clase_id = c.id
-        WHERE h.dia = ?
-        ORDER BY h.hora_inicio
-    ");
-    $sentencia->execute([$dia]);
-    return $sentencia->fetchAll(PDO::FETCH_ASSOC);
-}
 }

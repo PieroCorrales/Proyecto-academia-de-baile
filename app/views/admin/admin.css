@@ -1,0 +1,205 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fdfdfc;
+}
+
+.container-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    min-height: 100vh;
+}
+
+header {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.button-back {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.button-back a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.button-back svg {
+    width: 40px;
+    height: 40px;
+    stroke: rgb(0, 0, 0);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #9d9d9d78;
+}
+
+.btn-accion {
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-editar {
+    background-color: rgba(235, 161, 23, 0.784);
+}
+
+.btn-eliminar {
+    background-color: rgba(247, 34, 34, 0.774);
+}
+
+.btn-aceptar {
+    background-color: rgba(34, 197, 94, 0.8);
+}
+
+.btn-rechazar {
+    background-color: rgba(247, 34, 34, 0.8);
+}
+
+.container-info {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+}
+
+form input {
+    width: 12rem;
+    height: 3rem;
+    padding-left: 12px;
+    border: 1px solid #000;
+    border-radius: 16px;
+}
+
+form button {
+    width: 8rem;
+    height: 3rem;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 12px;
+}
+
+h1 {
+    font-size: 3rem;
+    margin: 0;
+    padding: 1rem 0rem 3rem 0rem;
+}
+
+#content-box {
+    display: flex;
+    padding: 15px;
+    background-color: #f9f9f9;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    height: 30px;
+    border: 1px solid #333;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 6px 8px 12px #8d8686, -8px -8px 12px #ffffff;
+}
+
+#content-box a {
+    color: #000000;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#content-box a:hover {
+    color: #0056b3;
+}
+
+.estado-aceptada {
+    color: green;
+    font-weight: bold;
+}
+
+.estado-rechazada {
+    color: red;
+    font-weight: bold;
+}
+
+
+@media (max-width: 768px) {
+    h1 {
+        text-align: center;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .container-info {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    #content-box {
+        width: 80%;
+        max-width: 300px;
+    }
+
+    .container {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    table {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    th, td {
+        padding: 6px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+    }
+
+    .btn-accion {
+        padding: 3px 6px;
+        font-size: 0.8rem;
+        margin: 2px;
+    }
+}

@@ -1,0 +1,27 @@
+# Configuración con credenciales (usa config.example.php como plantilla)
+config/config.php
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Archivos de entorno
+.env
+
+# Archivos temporales
+*.tmp
+*.bak
+
+# Comprimidos de entrega (no necesarios en el repo)
+BasesDeDatos.zip

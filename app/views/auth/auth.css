@@ -1,0 +1,76 @@
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    font-family: 'Poppins', sans-serif;
+}
+
+.auth-card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+}
+
+#logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 1.5px solid #dee2e6;
+    padding: 0.6rem 0.9rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: #302b63;
+    box-shadow: 0 0 0 0.2rem rgba(48, 43, 99, 0.2);
+}
+
+.input-group-text {
+    border-radius: 10px 0 0 10px;
+    background-color: #f8f9fa;
+    border: 1.5px solid #dee2e6;
+    border-right: none;
+    color: #6c757d;
+}
+
+.input-group .form-control {
+    border-radius: 0 10px 10px 0;
+    border-left: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #302b63, #0f0c29);
+    border: none;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, #302b63, #0f0c29);
+    border: none;
+}
+
+.link-back {
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: color 0.2s ease;
+}
+
+.link-back:hover {
+    color: #fff;
+}
+
+a {
+    color: #302b63;
+}
+
+a:hover {
+    color: #0f0c29;
+}

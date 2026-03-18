@@ -1,0 +1,305 @@
+* {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6,
+.title, #text, .grid-item p {
+    font-family: 'Playfair Display', serif;
+}
+
+/* ── Navbar ── */
+.nav-bar-color {
+    padding: 5px 10px 0px 5px;
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
+    color: #000;
+    z-index: 1050;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-height: 8rem;
+    position: relative;
+}
+
+.nav-link {
+    color: #000;
+    font-size: 20px;
+    font-weight: 600;
+    margin-left: 15px;
+    margin-right: 15px;
+    letter-spacing: 3px;
+    transition: color 0.2s ease, font-size 0.2s ease;
+}
+
+.nav-link:hover {
+    color: rgb(143, 158, 243);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+.navbar-collapse {
+    background-color: rgb(255, 255, 255);
+    margin-top: 10px;
+    transition: none;
+}
+
+.navbar {
+    text-align: center;
+}
+
+.nav {
+    gap: 1rem;
+}
+
+/* ── Carrusel pantalla completa ── */
+.carousel {
+    z-index: 1;
+    position: relative;
+    height: calc(100vh - 80px);
+    overflow: hidden;
+}
+
+.carousel-item img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: calc(100vh - 80px);
+}
+
+/* Ken Burns: zoom lento mientras la imagen está activa */
+@keyframes kenburns {
+    from { transform: scale(1);    }
+    to   { transform: scale(1.07); }
+}
+.carousel-item.active img {
+    animation: kenburns 8s ease-out forwards;
+}
+
+/* Overlay oscuro para legibilidad del título */
+.carousel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0.55) 50%,
+        rgba(0,0,0,0.15) 100%
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    z-index: 1051;
+}
+
+/* Título del carrusel con animación de entrada */
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translate(-50%, -40%); }
+    to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1050;
+    color: #fff;
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-align: center;
+    width: 90%;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.6);
+    letter-spacing: 4px;
+    pointer-events: none;
+    animation: fadeSlideUp 1s ease forwards;
+}
+
+/* ── Texto destacado ── */
+#text-box {
+    text-align: center;
+    padding: 2.5rem 1rem;
+}
+
+#text {
+    font-size: 3rem;
+    font-style: italic;
+    color: #333;
+}
+
+/* ── Grid de clases ── */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 100%;
+    margin: 1rem auto;
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.grid-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* Zoom de imagen al hacer hover */
+.grid-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.grid-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Overlay oscuro con texto al hacer hover */
+.grid-item a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+}
+
+.grid-item a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    transition: background 0.3s ease;
+    border-radius: 8px;
+}
+
+.grid-item:hover a::after {
+    background: rgba(0,0,0,0.12);
+}
+
+.grid-item a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.grid-item p {
+    margin: 10px 8px 12px;
+    font-size: 1rem;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.grid-item:hover p {
+    color: #111;
+    font-weight: 600;
+}
+
+/* ── Animación de entrada al scroll ── */
+@keyframes revealUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ── Secciones generales ── */
+.section-container {
+    padding: 50px 20px;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+.section-container .row img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Testimonials hover */
+.card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12) !important;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .nav-bar-color { padding: 10px; }
+    .navbar-collapse { border: #000 solid; }
+
+    .title {
+        font-size: 2rem;
+        line-height: 2.5rem;
+    }
+
+    .carousel,
+    .carousel-item img {
+        height: 60vh;
+    }
+
+    .grid-container { grid-template-columns: repeat(2, 1fr); }
+
+    .text-container {
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+
+    #text { font-size: 2.5rem; }
+}
+
+@media (max-width: 500px) {
+    .nav-bar-color { padding: 10px; }
+    .navbar-collapse { border: #000 solid; margin-top: 20px; }
+    .title { display: none; }
+    #text { font-size: 1.5rem; }
+    .grid-container { grid-template-columns: 1fr; }
+
+    .carousel,
+    .carousel-item img {
+        height: 50vh;
+    }
+}

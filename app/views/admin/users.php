@@ -1,96 +1,96 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+require_once __DIR__ . '/../../../config/config.php';
+
+if (!isset($_SESSION['usuario_id']) || $_SESSION['rol'] !== 'administrador') {
+    header('Location: ' . BASE_URL . '/app/views/auth/login.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Panel de Administrador</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administrador - DanceWithMe</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .btn-accion {
+        body { font-family: 'Poppins', sans-serif; background: #f0f2f5; min-height: 100vh; }
+        .top-navbar { background: linear-gradient(135deg, #0f0c29, #302b63); padding: 0.8rem 1.5rem; }
+        .top-navbar .brand-text { color: #fff; font-weight: 600; letter-spacing: 1px; }
+        .admin-card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
-            padding: 5px 10px;
-            margin: 5px;
-            border-radius: 5px;
-            color: white;
-            font-weight: bold;
+            text-decoration: none;
+            color: inherit;
         }
-        .btn-aceptar {
-            background-color: green;
+        .admin-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+            color: inherit;
         }
-        .btn-rechazar {
-            background-color: red;
+        .card-icon {
+            width: 64px; height: 64px;
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 1rem;
         }
+        .icon-purple { background: #ede7f6; color: #6a1b9a; }
+        .icon-orange { background: #fff3e0; color: #e65100; }
     </style>
 </head>
+
 <body>
-    <h1>Bienvenido, Administrador</h1>
+    <nav class="top-navbar d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+            <a href="../../../public/index.php" class="text-decoration-none">
+                <img src="../../../public/img/logo2.png" alt="Logo" height="44">
+            </a>
+            <span class="brand-text">Panel de Administrador</span>
+        </div>
+        <a href="../../routes/cerrar_sesion.php" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-box-arrow-right me-1"></i>Cerrar sesión
+        </a>
+    </nav>
 
-    <!-- Lista de Reservas -->
-    <h2>Gestión de Reservas</h2>
-    <?php
-    session_start();
-    if (isset($_SESSION['usuario_id']) && $_SESSION['rol'] === 'administrador') {
-        require_once '../../controllers/ReservationController.php';
-        $reservationController = new ReservationController();
-        $reservas = $reservationController->obtenerTodasLasReservas();
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                 style="width:80px;height:80px;">
+                <i class="bi bi-shield-fill-check" style="font-size:2rem;"></i>
+            </div>
+            <h1 class="h2 fw-bold">Bienvenido, Administrador</h1>
+            <p class="text-muted">Gestiona las reservas y los clientes de la academia</p>
+        </div>
 
-        if (count($reservas) > 0) {
-            echo "<table>";
-            echo "<tr><th>ID Reserva</th><th>Usuario</th><th>Clase</th><th>Fecha</th><th>Estado</th><th>Acciones</th></tr>";
+        <div class="row justify-content-center g-4">
+            <div class="col-md-4 col-sm-6">
+                <a href="reservations.php" class="admin-card card p-4 text-center d-block">
+                    <div class="card-icon icon-purple">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+                    <h5 class="fw-semibold mb-1">Gestionar Reservas</h5>
+                    <p class="text-muted small mb-0">Acepta o rechaza las solicitudes de clases</p>
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="users_data.php" class="admin-card card p-4 text-center d-block">
+                    <div class="card-icon icon-orange">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <h5 class="fw-semibold mb-1">Gestionar Clientes</h5>
+                    <p class="text-muted small mb-0">Edita o elimina cuentas de usuarios</p>
+                </a>
+            </div>
+        </div>
+    </div>
 
-            foreach ($reservas as $reserva) {
-                // Obtener el nombre del usuario
-                require_once '../../models/UserModel.php';
-                $userModel = new UserModel();
-                $usuario = $userModel->buscarPorId($reserva['usuario_id']);
-                $nombreUsuario = $usuario['nombre'] . ' ' . $usuario['apellidos'];
-
-                echo "<tr>";
-                echo "<td>" . $reserva['id'] . "</td>";
-                echo "<td>" . $nombreUsuario . "</td>";
-                echo "<td>" . $reserva['clase'] . "</td>";
-                echo "<td>" . $reserva['fecha'] . "</td>";
-                echo "<td>" . ucfirst($reserva['estado']) . "</td>";
-                echo "<td>";
-                if ($reserva['estado'] === 'pendiente') {
-                    echo "<form action='/proyecto-clases-baile/app/routes/process_reservation_status.php' method='POST' style='display:inline;'>";
-                    echo "<input type='hidden' name='id' value='" . $reserva['id'] . "'>";
-                    echo "<input type='hidden' name='estado' value='aceptada'>";
-                    echo "<button type='submit' class='btn-accion btn-aceptar'>Aceptar</button>";
-                    echo "</form>";
-
-                    echo "<form action='/proyecto-clases-baile/app/routes/process_reservation_status.php' method='POST' style='display:inline;'>";
-                    echo "<input type='hidden' name='id' value='" . $reserva['id'] . "'>";
-                    echo "<input type='hidden' name='estado' value='rechazada'>";
-                    echo "<button type='submit' class='btn-accion btn-rechazar'>Rechazar</button>";
-                    echo "</form>";
-                }
-                echo "</td>";
-                echo "</tr>";
-            }
-
-            echo "</table>";
-        } else {
-            echo "<p>No hay reservas registradas.</p>";
-        }
-    } else {
-        echo "<p>No tienes permiso para acceder a este panel.</p>";
-        header('Refresh:2; url=/proyecto-clases-baile/app/views/auth/login.php');
-        exit;
-    }
-    ?>
-
-    <!-- Enlace para Cerrar Sesión -->
-    <a href="/proyecto-clases-baile/app/routes/cerrar_sesion.php">Cerrar Sesión</a>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
