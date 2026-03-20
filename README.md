@@ -117,5 +117,4 @@ proyecto-clases-baile-copia/
 
 ## Autor
 
-Proyecto de TFG — [tu nombre]
-[Tu perfil de LinkedIn o GitHub]
+Proyecto de TFG — PieroCorrales https://www.linkedin.com/in/piero-corrales/
