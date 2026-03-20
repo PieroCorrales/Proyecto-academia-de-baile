@@ -66,13 +66,12 @@ proyecto-clases-baile-copia/
 
 1. **Clona el repositorio** en la carpeta `htdocs` de XAMPP:
    ```bash
-   git clone https://github.com/tu-usuario/proyecto-clases-baile.git
-   cd proyecto-clases-baile
+   git clone https://github.com/PieroCorrales/Proyecto-academia-de-baile.git
+   cd Proyecto-academia-de-baile
    ```
 
 2. **Crea la base de datos**: importa el esquema SQL en phpMyAdmin:
    - Nombre de la base de datos: `escuela_baile`
-   - Fichero: `database/schema.sql` (incluido en el repositorio)
 
 3. **Configura la conexión**: copia la plantilla y ajusta tus credenciales:
    ```bash
@@ -80,14 +79,14 @@ proyecto-clases-baile-copia/
    ```
    Edita `config/config.php`:
    ```php
-   define('BASE_URL', '/proyecto-clases-baile');  // nombre de tu carpeta
+   define('BASE_URL', '/Proyecto-academia-de-baile');  // nombre de tu carpeta
    $username = 'root';
    $password = '';  // contraseña de tu MySQL
    ```
 
 4. **Inicia XAMPP** (Apache + MySQL) y accede a:
    ```
-   http://localhost/proyecto-clases-baile/public/index.php
+   http://localhost/Proyecto-academia-de-baile/public/index.php
    ```
 
 ---
@@ -117,4 +116,6 @@ proyecto-clases-baile-copia/
 
 ## Autor
 
-Proyecto de TFG — PieroCorrales https://www.linkedin.com/in/piero-corrales/
+Proyecto de TFG — **Piero Corrales**
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Piero%20Corrales-0077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/piero-corrales/)
