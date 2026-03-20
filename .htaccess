@@ -1,0 +1,12 @@
+# Bloquear acceso directo a carpetas sensibles
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Denegar acceso a /config/ y /app/ excepto a través de PHP interno
+    RewriteRule ^config/ - [F,L]
+    RewriteRule ^app/models/ - [F,L]
+    RewriteRule ^app/controllers/ - [F,L]
+</IfModule>
+
+# Seguridad adicional: no mostrar listado de directorios
+Options -Indexes
